@@ -1,0 +1,2 @@
+# CodeBuddy
+Proyecto de Sintesis
