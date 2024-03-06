@@ -6,6 +6,7 @@ export const createRouter = () => {
 
     const dbController = new Controller()
 
+    router.get("/", dbController.itWorks)
     router.get("/hello", dbController.helloWorld)
 
     return router;
