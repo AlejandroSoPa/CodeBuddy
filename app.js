@@ -15,7 +15,7 @@ app.use(json());
 app.use(cors());
 app.disable('x-powered-by'); // deshabilitar el header X-Powered-By: Express (seguridad)
 
-app.use("/api/v1", createRouter());
+app.use("/", createRouter());
 
 // app.get('/', (req, res) => {
 //     res.send("Hello World!");
@@ -23,5 +23,5 @@ app.use("/api/v1", createRouter());
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}/api/v1`);
+    console.log(`Server is running on https://codebuddy.ieti.site/api/v1`);
 });
