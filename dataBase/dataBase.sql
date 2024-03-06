@@ -1,3 +1,13 @@
+CREATE TABLE Idiomas (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(255)
+);
+
+CREATE TABLE Nivel (
+    id INT PRIMARY KEY,
+    nombre ENUM("estudiante", "profesional", "hobbie")
+);
+
 CREATE TABLE Usuario (
     id INT PRIMARY KEY,
     nombre VARCHAR(255) UNIQUE,
@@ -10,18 +20,14 @@ CREATE TABLE Usuario (
     perfilGitHub VARCHAR(255),
     perfilLinkedIn VARCHAR(255),
     perfilTwitter VARCHAR(255),
+    FOREIGN KEY (idIdioma) REFERENCES Idiomas(id),
+    FOREIGN KEY (idNivel) REFERENCES Nivel(id)
+
 );
 
-CREATE TABLE Idiomas (
+CREATE TABLE Plataforma (
     id INT PRIMARY KEY,
-    nombre VARCHAR(255),
-    FOREIGN KEY (id) REFERENCES Usuario(idIdioma)
-);
-
-CREATE TABLE Nivel (
-    id INT PRIMARY KEY,
-    nombre ENUM("estudiante", "profesional", "hobbie"),
-    FOREIGN KEY (id) REFERENCES Usuario(idNivel)
+    nombre VARCHAR(255)
 );
 
 CREATE TABLE PostForo (
@@ -57,11 +63,6 @@ CREATE TABLE Comentario (
     FOREIGN KEY (idUsuario) REFERENCES Usuario(id),
     FOREIGN KEY (idPostProyecto) REFERENCES PostProyecto(id),
     FOREIGN KEY (idPostForo) REFERENCES PostForo(id)
-);
-
-CREATE TABLE Plataforma (
-    id INT PRIMARY KEY,
-    nombre VARCHAR(255)
 );
 
 CREATE TABLE ParticipacionProyecto (
@@ -114,7 +115,7 @@ CREATE TABLE Medalla (
     id INT PRIMARY KEY,
     nombre VARCHAR(255),
     descripcion TEXT,
-    ruta VARCHAR(255),
+    ruta VARCHAR(255)
 );
 
 CREATE TABLE UsuarioMedalla (
