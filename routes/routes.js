@@ -8,6 +8,7 @@ export const createRouter = () => {
 
     router.get("/", dbController.itWorks)
     router.get("/hello", dbController.helloWorld)
+    router.post("/crearCuenta", dbController.crearCuenta)
 
     return router;
 }
