@@ -6,10 +6,10 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch app.js",
-    "start": "npm-run-all -p frontend:start backend:start",
-    "frontend:start": "node index.js",
-    "backend:start": "node app.js"
+    "dev": "node --watch ./backend/app.js",
+    "start": "npm-run-all -p front back",
+    "front": "cd frontend && npm run dev",
+    "back": "node --watch ./backend/app.js"
   },
   "repository": {
     "type": "git",

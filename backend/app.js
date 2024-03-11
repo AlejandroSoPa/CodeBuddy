@@ -15,5 +15,5 @@ app.use("/", createRouter());
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(`Server is running on https://codebuddy.ieti.site/api/v1`);
+    console.log(`Server is running on https://codebuddy.ieti.site/api/v1 or http://localhost:${port}`);
 });
