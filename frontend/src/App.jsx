@@ -1,6 +1,7 @@
 // import './componentsCSS/App.css'
 // import { EjemploComponentes } from './components/EjemploComponentes'
-import { Header, Footer } from './components/ComponentesGlobales.jsx'
+import './App.css'
+import { Header } from './components/Header/Header'
 
 
 export function App() {
@@ -23,7 +24,6 @@ export function App() {
                 */
             }
             <Header />
-            <Footer></Footer>
         </>
     )
 }
