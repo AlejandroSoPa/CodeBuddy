@@ -2,14 +2,14 @@
 
 
 import mysql from "mysql2/promise"
-import validateUUID from "uuid-validate"
+// import validateUUID from "uuid-validate"
 
 const config = {
     host: "localhost",
-    port: 3307,
-    user: "admin",
-    password: "admin123",
-    database: "moviesdb"
+    port: 3306,
+    user: "super",
+    password: "1q2w·E4r5t6y",
+    database: "codeBuddy"
 }
 
 const connection = await mysql.createConnection(config)
@@ -22,24 +22,44 @@ export class Model {
         return "Hello World!"
     }
 
-    static async crearCuenta(nombreUsuario, email, contrasena) {
-        const usarioCorrecto = comprobarUsuario({ email, contrasena, nombreUsuario});
+    static async crearCuenta(nombreUsuario, email, contrasena, contrasena2) {
+        const usarioCorrecto = comprobarUsuario({ nombreUsuario, email, contrasena, contrasena2 });
         if (usarioCorrecto == false) {
-            return "Usuario incorrecto"
+            return false
         } else {
             try {
-                const id = uuidv4();
-                await connection.query(
-                    `INSERT INTO Usuario (id, nombre, correo, contrasena, idIdioma, descripcion, idNivel)
-                    VALUES (?,?,?,SHA2(?,512))`,
-                    [id, nombreUsuario, email, contrasena, 1, "", null]
+                var duplicado = await connection.query(
+                    `SELECT COUNT(*) FROM Usuario WHERE correo = ? OR nombre = ?`,
+                    [email, nombreUsuario]
                 )
+                
+                // Sacamos el valor del count debido que duplicado es una matriz multidimensional 
+                // debido a que connection.query devuelve un arreglo de resultados
+                const count = duplicado[0][0]['COUNT(*)'];
+
+                if (count === 0) {
+                    const id = uuidv4();
+                    await connection.query(
+                        `INSERT INTO Usuario (id, nombre, correo, contrasena)
+                        VALUES (?,?,?,SHA2("?",512))`,
+                        [id, nombreUsuario, email, contrasena]
+                    )
+                } else {
+                    return false
+                }
             } catch (e) {
-                // Puede enviar al usuario info sensible
-                throw new Error("Error create new movie")
-                // Enviar error por ahi xD
+                console.error(e.message)
             }
-            return "Cuenta creada"
+            return true
+        }
+    }
+
+    static async crearCuenta(email, contrasena) {
+        const usarioCorrecto = comprobarUsuarioLogin({ email, contrasena });
+        if (usarioCorrecto == false) {
+            return false
+        } else {
+
         }
     }
 }

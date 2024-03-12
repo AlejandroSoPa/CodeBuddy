@@ -9,7 +9,7 @@ CREATE TABLE Nivel (
 );
 
 CREATE TABLE Usuario (
-    id INT PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     nombre VARCHAR(255) UNIQUE,
     correo VARCHAR(255) UNIQUE,
     contrasena VARCHAR(255),
@@ -31,15 +31,15 @@ CREATE TABLE Plataforma (
 );
 
 CREATE TABLE PostForo (
-    id INT PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     texto TEXT,
-    idUsuario INT,
+    idUsuario VARCHAR(255),
     fechaCreacion DATE,
     FOREIGN KEY (idUsuario) REFERENCES Usuario(id)
 );
 
 CREATE TABLE PostProyecto (
-    id INT PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     titulo VARCHAR(255),
     descripcion TEXT,
     duracionEstimada INT,
@@ -47,72 +47,72 @@ CREATE TABLE PostProyecto (
     rutaLogotipo VARCHAR(255),
     fechaCreacion DATE,
     estado ENUM("inicializado", "finalizado", "cancelado", "buscando" ),
-    idUsuario INT,
+    idUsuario VARCHAR(255),
     idPlataforma INT,
     FOREIGN KEY (idUsuario) REFERENCES Usuario(id),
     FOREIGN KEY (idPlataforma) REFERENCES Plataforma(id)
 );
 
 CREATE TABLE Comentario (
-    id INT PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     contenido TEXT,
     fechaCreacion DATE,
-    idUsuario INT,
-    idPostProyecto INT NULL,
-    idPostForo INT NULL,
+    idUsuario VARCHAR(255),
+    idPostProyecto VARCHAR(255) NULL,
+    idPostForo VARCHAR(255) NULL,
     FOREIGN KEY (idUsuario) REFERENCES Usuario(id),
     FOREIGN KEY (idPostProyecto) REFERENCES PostProyecto(id),
     FOREIGN KEY (idPostForo) REFERENCES PostForo(id)
 );
 
 CREATE TABLE ParticipacionProyecto (
-    id INT PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     estadoParticipacion ENUM("pendiente", "aceptado", "rechazado") DEFAULT "pendiente",
-    idUsuario INT,
-    idPostProyecto INT,
+    idUsuario VARCHAR(255),
+    idPostProyecto VARCHAR(255),
     FOREIGN KEY (idUsuario) REFERENCES Usuario(id),
     FOREIGN KEY (idPostProyecto) REFERENCES PostProyecto(id)
 );
 
 CREATE TABLE Chat (
-    id INT PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     nombre VARCHAR(255),
     grupal BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE ChatUsuario (
-    idChat INT,
-    idUsuario INT,
+    idChat VARCHAR(255),
+    idUsuario VARCHAR(255),
     FOREIGN KEY (idChat) REFERENCES Chat(id),
     FOREIGN KEY (idUsuario) REFERENCES Usuario(id)
 );
 
 CREATE TABLE Mensajes (
-    id INT PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     contenido VARCHAR(280),
     fechaEnvio DATE,
-    idChat INT,
-    idUsuario INT,
+    idChat VARCHAR(255),
+    idUsuario VARCHAR(255),
     FOREIGN KEY (idChat) REFERENCES Chat(id),
     FOREIGN KEY (idUsuario) REFERENCES Usuario(id)
 );
 
 CREATE TABLE Notificacion (
-    id INT PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     contenido TEXT,
     fechaEnvio DATE,
-    idUsuario INT,
+    idUsuario VARCHAR(255),
     FOREIGN KEY (idUsuario) REFERENCES Usuario(id)
 );
 
 CREATE TABLE Reputacion (
     cantidad INT,
-    idUsuario INT,
+    idUsuario VARCHAR(255),
     FOREIGN KEY (idUsuario) REFERENCES Usuario(id)
 );
 
 CREATE TABLE Medalla (
-    id INT PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     nombre VARCHAR(255),
     descripcion TEXT,
     ruta VARCHAR(255)
@@ -120,19 +120,19 @@ CREATE TABLE Medalla (
 
 CREATE TABLE UsuarioMedalla (
     fechaObtencion DATE,
-    idUsuario INT,
-    idMedalla INT,
+    idUsuario VARCHAR(255),
+    idMedalla VARCHAR(255),
     FOREIGN KEY (idUsuario) REFERENCES Usuario(id),
     FOREIGN KEY (idMedalla) REFERENCES Medalla(id)
 );
 
 CREATE TABLE Invitacion (
-    id INT PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     mensaje TEXT,
     fechaEnvio DATE,
-    idUsuarioRemitente INT, -- Usuario que envia la invitacion
-    idUsuarioReceptor INT, -- Usuario que recibe la invitacion
-    idPostProyecto INT,
+    idUsuarioRemitente VARCHAR(255), -- Usuario que envia la invitacion
+    idUsuarioReceptor VARCHAR(255), -- Usuario que recibe la invitacion
+    idPostProyecto VARCHAR(255),
     FOREIGN KEY (idUsuarioRemitente) REFERENCES Usuario(id),
     FOREIGN KEY (idUsuarioReceptor) REFERENCES Usuario(id),
     FOREIGN KEY (idPostProyecto) REFERENCES PostProyecto(id)
