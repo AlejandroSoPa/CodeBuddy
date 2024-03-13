@@ -1,4 +1,44 @@
 header {
     width: 98%;
+    height: 56px;
+    background-color: white;
+    border-radius: 10px;
+    /* añadir sombra */
     margin: auto;
+    margin-top: 8px;
+    padding:
+        /*12px*/
+        0 16px;
+    position: sticky;
+
+    display: flex;
+    justify-content: space-between;
+    align-self: center;
+
+    nav {
+        display: flex;
+        align-items: center;
+    }
+
+    .seccion1>* {
+        margin-right: 17px;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    a:hover {
+        color: #2EC4B6;
+    }
+
+    a:hover:not(.logo) img {
+        filter: invert(65%) sepia(73%) saturate(405%) hue-rotate(124deg) brightness(87%) contrast(91%);
+    }
+
+    .logo img {
+        width: 36px;
+        height: 36px;
+    }
 }
