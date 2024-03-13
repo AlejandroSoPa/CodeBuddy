@@ -1,10 +1,13 @@
 // import React from "react";
+import { useState } from "react";
 import "./Header.css";
 
-export function Header({ isLogged = false, nombreUsuario }) {
+export function Header({ isLogged = false, nombreUsuario, mostrarInput = false }) {
     if (isLogged) {
         nombreUsuario = "Pautronix996"
     }
+    const [modo, setModo] = useState("claro");
+
     return (
         <header>
             <nav className="seccion1">
@@ -38,7 +41,10 @@ export function Header({ isLogged = false, nombreUsuario }) {
                 }
             </nav>
             <nav className="seccion2">
-                <input type="text" placeholder="Buscar publicación..." />
+                {mostrarInput ?
+                    <input type="text" placeholder="Buscar publicación..." />
+                    : null
+                }
             </nav>
             <nav className="seccion3">
                 {isLogged ?
@@ -55,12 +61,13 @@ export function Header({ isLogged = false, nombreUsuario }) {
                     ) : null
                 }
                 <div className="tema">
-                    <button id="claro">
+                    <button id="claro" onClick={() => setModo("claro")}>
                         <img src="http://localhost:5173/src/assets/sol.svg" alt="Icono de sol modo claro" />
                     </button>
-                    <button id="oscuro">
+                    <button id="oscuro" onClick={() => setModo("oscuro")} >
                         <img src="http://localhost:5173/src/assets/luna.svg" alt="Icono de luna modo oscuro" />
                     </button>
+                    <div className={`fondo ${modo}`} ></div>
                 </div>
             </nav>
         </header >

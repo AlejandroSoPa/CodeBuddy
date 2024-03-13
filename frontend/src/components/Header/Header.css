@@ -1,44 +1,161 @@
 header {
-    width: 98%;
+    width: calc(98% - 32px);
     height: 56px;
     background-color: white;
     border-radius: 10px;
-    /* añadir sombra */
-    margin: auto;
-    margin-top: 8px;
+    box-shadow: 0px 3px 3px 0 rgba(0, 0, 0, 0.2);
+    margin: 8px auto;
     padding:
         /*12px*/
         0 16px;
-    position: sticky;
+    position: fixed;
 
     display: flex;
     justify-content: space-between;
     align-self: center;
+}
 
-    nav {
-        display: flex;
-        align-items: center;
+header nav {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+header .seccion2 {
+    justify-content: center;
+}
+
+header .seccion3 {
+    justify-content: flex-end;
+}
+
+header .seccion1>*,
+header .seccion3>a {
+    margin-right: 17px;
+}
+
+header a,
+header .headerUsuario {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+}
+
+header .seccion1 a img,
+header .headerUsuario img {
+    margin-right: 5px;
+}
+
+header a:hover {
+    color: #2EC4B6;
+}
+
+header a:hover:not(.logo) img {
+    filter: invert(65%) sepia(73%) saturate(405%) hue-rotate(124deg) brightness(87%) contrast(91%);
+}
+
+header .seccion3>a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+}
+
+header .seccion3>a img {
+    width: 32px;
+    height: 32px;
+}
+
+header .logo img {
+    margin: 0;
+    width: 36px;
+    height: 36px;
+}
+
+header .tema {
+    position: relative;
+    display: flex;
+    box-shadow: inset 0px 2px 3px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+header .tema button {
+    height: 40px;
+    width: 40px;
+    border: none;
+    background-color: transparent;
+
+    display: flex;
+    justify-content: center;
+    align-self: center;
+
+    cursor: pointer;
+}
+
+header .tema button:nth-child(odd) {
+    /* border-right: 1px solid black; */
+}
+
+header .tema .fondo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-color: #C3D6D4;
+    z-index: -1;
+    transition: transform 0.3s;
+}
+
+header .tema .fondo.claro {
+    animation: moverFondoR 300ms linear;
+    transform: translateX(0);
+
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+header .tema .fondo.oscuro {
+    animation: moverFondo 300ms linear;
+    transform: translateX(100%);
+
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+}
+
+@keyframes moverFondo {
+    0% {
+        transform: translateX(0);
+        border-radius: 0;
     }
 
-    .seccion1>* {
-        margin-right: 17px;
+    50% {
+        transform: translateX(50%);
+        border-radius: 100%;
     }
 
-    a {
-        text-decoration: none;
-        color: black;
+    100% {
+        transform: translateX(100%);
+        border-radius: 0;
+    }
+}
+
+@keyframes moverFondoR {
+    0% {
+        transform: translateX(100%);
+        border-radius: 0;
     }
 
-    a:hover {
-        color: #2EC4B6;
+    50% {
+        transform: translateX(50%);
+        border-radius: 100%;
     }
 
-    a:hover:not(.logo) img {
-        filter: invert(65%) sepia(73%) saturate(405%) hue-rotate(124deg) brightness(87%) contrast(91%);
-    }
-
-    .logo img {
-        width: 36px;
-        height: 36px;
+    100% {
+        transform: translateX(0);
+        border-radius: 0;
     }
 }

@@ -2,6 +2,7 @@
 // import { EjemploComponentes } from './components/EjemploComponentes'
 import './App.css'
 import { Header } from './components/Header/Header'
+import { CrearCuenta } from './components/CrearCuenta/CrearCuenta'
 
 
 export function App() {
@@ -24,6 +25,7 @@ export function App() {
                 */
             }
             <Header />
+            <CrearCuenta />
         </>
     )
 }

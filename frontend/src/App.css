@@ -6,9 +6,12 @@ body {
     padding: 0;
     font-family: "Lato", sans-serif;
     background: linear-gradient(to bottom, #2EC4B6, white);
+    overflow: hidden;
 }
 
 #root {
+    max-height: 100vh;
+    overflow: auto;
     width: 100vw;
     height: 100vh;
 }
