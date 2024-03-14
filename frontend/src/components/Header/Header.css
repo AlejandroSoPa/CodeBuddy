@@ -5,10 +5,9 @@ header {
     border-radius: 10px;
     box-shadow: 0px 3px 3px 0 rgba(0, 0, 0, 0.2);
     margin: 8px auto;
-    padding:
-        /*12px*/
-        0 16px;
-    position: fixed;
+    padding: 0 16px;
+    position: sticky;
+    top: 8px;
 
     display: flex;
     justify-content: space-between;
@@ -63,7 +62,7 @@ header .seccion3>a {
     width: 40px;
 }
 
-header .seccion3>a img {
+header .seccion3 img {
     width: 32px;
     height: 32px;
 }
@@ -79,6 +78,7 @@ header .tema {
     display: flex;
     box-shadow: inset 0px 2px 3px 0 rgba(0, 0, 0, 0.2);
     border-radius: 10px;
+    overflow: hidden;
 }
 
 header .tema button {
@@ -89,13 +89,9 @@ header .tema button {
 
     display: flex;
     justify-content: center;
-    align-self: center;
+    align-items: center;
 
     cursor: pointer;
-}
-
-header .tema button:nth-child(odd) {
-    /* border-right: 1px solid black; */
 }
 
 header .tema .fondo {
@@ -106,19 +102,18 @@ header .tema .fondo {
     height: 100%;
     background-color: #C3D6D4;
     z-index: -1;
-    transition: transform 0.3s;
+    transition: transform 300ms;
 }
 
 header .tema .fondo.claro {
-    animation: moverFondoR 300ms linear;
-    transform: translateX(0);
+    animation: moverFondoIzquierda 300ms linear;
 
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
 }
 
 header .tema .fondo.oscuro {
-    animation: moverFondo 300ms linear;
+    animation: moverFondoDerecha 300ms linear;
     transform: translateX(100%);
 
     border-top-right-radius: 10px;
@@ -126,7 +121,7 @@ header .tema .fondo.oscuro {
 
 }
 
-@keyframes moverFondo {
+@keyframes moverFondoDerecha {
     0% {
         transform: translateX(0);
         border-radius: 0;
@@ -143,7 +138,7 @@ header .tema .fondo.oscuro {
     }
 }
 
-@keyframes moverFondoR {
+@keyframes moverFondoIzquierda {
     0% {
         transform: translateX(100%);
         border-radius: 0;

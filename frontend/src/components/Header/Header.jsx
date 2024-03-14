@@ -3,9 +3,6 @@ import { useState } from "react";
 import "./Header.css";
 
 export function Header({ isLogged = false, nombreUsuario, mostrarInput = false }) {
-    if (isLogged) {
-        nombreUsuario = "Pautronix996"
-    }
     const [modo, setModo] = useState("claro");
 
     return (

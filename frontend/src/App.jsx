@@ -24,8 +24,9 @@ export function App() {
                 </EjemploComponentes>
                 */
             }
-            <Header />
+            <Header nombreUsuario="Pautronix996" isLogged />
             <CrearCuenta />
+            <div></div>
         </>
     )
 }
