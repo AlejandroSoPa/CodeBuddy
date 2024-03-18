@@ -3,6 +3,8 @@
 import './App.css'
 import { Header } from './components/Header/Header'
 import { CrearCuenta } from './components/CrearCuenta/CrearCuenta'
+import { IniciarSesion } from './components/IniciarSesion/InicialSesion'
+import { RecuperarContrasena } from './components/RecuperarContrasena/RecuperarContrasena'
 
 
 export function App() {
@@ -24,8 +26,10 @@ export function App() {
                 </EjemploComponentes>
                 */
             }
-            <Header nombreUsuario="Pautronix996" isLogged />
-            <CrearCuenta />
+            <Header />
+            <main>
+                <RecuperarContrasena />
+            </main>
             <div></div>
         </>
     )

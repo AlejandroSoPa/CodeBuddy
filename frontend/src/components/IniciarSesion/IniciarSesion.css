@@ -1,4 +1,4 @@
-.crearCuenta {
+.iniciarSesion {
     background-color: white;
     width: calc(85% - 200px);
     height: fit-content;
@@ -12,36 +12,33 @@
     display: flex;
     flex-direction: column;
 
-    margin-top: 60px;
+    align-self: center;
 }
 
-.crearCuenta h2 {
+.iniciarSesion h2 {
     font-size: 50px;
     margin: 0;
 }
 
-.crearCuenta span {
+.iniciarSesion .subTitulo {
     font-size: 20px;
     font-style: italic;
     color: rgba(0, 0, 0, .7);
 }
 
-.crearCuenta .formularioTitulo {
-    color: rgba(0, 0, 0, .6);
-    margin: 50px 0;
-}
-
-.crearCuenta form {
+.iniciarSesion form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 50px;
+
 }
 
-.crearCuenta form>* {
+.iniciarSesion form>* {
     margin-bottom: 30px;
 }
 
-.crearCuenta form input {
+.iniciarSesion form input {
     width: calc(100% - 30px);
     padding: 0 15px;
     height: 56px;
@@ -50,7 +47,7 @@
     border-radius: 10px;
 }
 
-.crearCuenta form button {
+.iniciarSesion form button {
     color: white;
     font-size: 20px;
     border: none;
@@ -60,7 +57,6 @@
     cursor: pointer;
 }
 
-
-.crearCuenta form button:active {
+.iniciarSesion form button:active {
     transform: scale(0.95);
 }
