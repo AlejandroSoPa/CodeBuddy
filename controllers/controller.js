@@ -51,10 +51,10 @@ export class Controller {
         const response = await Model.iniciarSesionGoogle(req.body.email)
         if (response) {
             const usuario = {
-                email: req.body.email,
+                email: req.body.email
             }
 
-            const token = jwt.sign(usuario, process.env.secretKey, { expiresIn: "4h" })
+            const token = jwt.sign(usuario, process.env.secretKey, { expiresIn: "2h" })
             result = { status: "OK", message: "Inicio de sesion correcto", data: { "token":token } }
         
         } else {
@@ -71,7 +71,7 @@ export class Controller {
                 email: req.body.email,
             }
 
-            const token = jwt.sign(usuario, process.env.secretKey, { expiresIn: "4h" })
+            const token = jwt.sign(usuario, process.env.secretKey, { expiresIn: "2h" })
             result = { status: "OK", message: "Inicio de sesion correcto", data: { "token":token } }
         
         } else {
@@ -79,5 +79,5 @@ export class Controller {
         }
         res.json(result)
     }
-    
+
 }

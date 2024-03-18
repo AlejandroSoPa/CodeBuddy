@@ -18,10 +18,30 @@ function comprobarObjetoNULL(objeto) {
 }
 
 export function comprobarUsuarioLogin({ email, contrasena }) {
-    const usuarioSinRegistrar = comprobarObjetoNULL({ email, contrasena })
-    if (usuarioSinRegistrar == false) {
+    const usuarioNulo = comprobarObjetoNULL({ email, contrasena })
+    if (usuarioNulo == false) {
         return false
     } else if (email.length <= 5 || email.length > 255 || contrasena.length < 8 || contrasena.length > 60 || !/\d/.test(contrasena) || !/[\W_]/.test(contrasena)){
+        return false
+    }
+    return true
+}
+
+export function comprobarUsuarioGoogle({ email }) {
+    const usuarioNulo = comprobarObjetoNULL({ email})
+    if (usuarioNulo == false) {
+        return false
+    } else if (email.length <= 5 || email.length > 255){
+        return false
+    }
+    return true
+}
+
+export function comprobarUsuarioGithub({ email }) {
+    const usuarioNulo = comprobarObjetoNULL({ email})
+    if (usuarioNulo == false) {
+        return false
+    } else if (email.length <= 5 || email.length > 255){
         return false
     }
     return true

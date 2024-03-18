@@ -79,8 +79,29 @@ export class Model {
         }
     }
 
-    iniciarSesionGoogle = async (email) => {
+    static async iniciarSesionGoogle(email) {
         const usarioCorrecto = comprobarUsuarioLogin({ email, contrasena });
+        try {
+            var duplicado = await connection.query(
+                `SELECT COUNT(*) FROM Usuario WHERE correo = ?`,
+                [email]
+            )
+            // Sacamos el valor del count debido que duplicado es una matriz multidimensional 
+            // debido a que connection.query devuelve un arreglo de resultados
+            const count = duplicado[0][0]['COUNT(*)'];
+            
+            if (count != 0) {
+                return true
+            } else {
+                return false
+            }
+        } catch (e) {
+            console.error(e.message)
+        }
+    }
+
+    static async iniciarSesionGithub(email) {
+        const usarioCorrecto = comprobarUsuarioLogin({ email });
         try {
             var duplicado = await connection.query(
                 `SELECT COUNT(*) FROM Usuario WHERE correo = ?`,
