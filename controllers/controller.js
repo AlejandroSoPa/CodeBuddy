@@ -80,4 +80,15 @@ export class Controller {
         res.json(result)
     }
 
+    cogerPosts = async (req, res) => {
+        let result = { status: "KO", message: "Error al coger los posts", data: {} }
+        const response = await Model.cogerPosts()
+        if (response) {
+            result = { status: "OK", message: "Posts cogidos", data: response }
+        } else {
+            result = { status: "KO", message: "Error al coger los posts", data: {} }
+        }
+        res.json(result)
+    }
+
 }

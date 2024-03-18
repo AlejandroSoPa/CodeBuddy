@@ -1,21 +1,13 @@
 // Aqui iria toda la conexion a la base de datos
 
 
-import mysql from "mysql2/promise"
 // import validateUUID from "uuid-validate"
 
-const config = {
-    host: "localhost",
-    port: 3306,
-    user: "super",
-    password: "1q2w·E4r5t6y",
-    database: "codeBuddy"
-}
-
-const connection = await mysql.createConnection(config)
-
 import {v4 as uuidv4} from "uuid";
-import {comprobarUsuarioRegister, comprobarUsuarioLogin} from "../../utils/modelUtils.js"
+import {comprobarUsuarioRegister, comprobarUsuarioLogin, conexionBBDD} from "../../utils/modelUtils.js"
+
+const connection = conexionBBDD()
+
 // Aqui es donde iran las consultas a la base de datos
 export class Model {
     static async helloWorld() {
@@ -116,6 +108,23 @@ export class Model {
             } else {
                 return false
             }
+        } catch (e) {
+            console.error(e.message)
+        }
+    }
+
+    static async cogerPosts() {
+        try {
+            const offset = parseInt(req.query.offset) || 0;
+            const limit = 10;
+
+            connection.query('SELECT * FROM PostProyecto LIMIT ?, ?', [offset, limit], (error, results) => {
+                if (error) {
+                    res.status(500).json({ message: error.message });
+                } else {
+                    res.json(results);
+                }
+            });
         } catch (e) {
             console.error(e.message)
         }

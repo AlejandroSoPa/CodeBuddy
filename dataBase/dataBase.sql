@@ -137,3 +137,13 @@ CREATE TABLE Invitacion (
     FOREIGN KEY (idUsuarioReceptor) REFERENCES Usuario(id),
     FOREIGN KEY (idPostProyecto) REFERENCES PostProyecto(id)
 );
+
+CREATE TABLE AuthGoogle (
+    id INT PRIMARY KEY,
+    googleId VARCHAR(255) UNIQUE,
+    email VARCHAR(255),
+    name VARCHAR(255),
+    profilePicture VARCHAR(255),
+    idUsuario VARCHAR(255),
+    FOREIGN KEY (idUsuario) REFERENCES Usuario(id)
+);

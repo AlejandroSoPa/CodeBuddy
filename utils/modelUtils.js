@@ -1,3 +1,17 @@
+import mysql from "mysql2/promise"
+
+export async function conexionBBDD() {
+    const config = {
+        host: "localhost",
+        port: 3306,
+        user: "super",
+        password: "1q2w·E4r5t6y",
+        database: "codeBuddy"
+    }
+    
+    const connection = await mysql.createConnection(config)
+}
+
 export function comprobarUsuarioRegister({ nombreUsuario, email, contrasena, contrasena2 }) {
     const usuarioNulo = comprobarObjetoNULL({ nombreUsuario, email, contrasena, contrasena2 })
     if (usuarioNulo == false) {

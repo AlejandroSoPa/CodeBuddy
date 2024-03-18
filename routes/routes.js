@@ -12,6 +12,7 @@ export const createRouter = () => {
     router.post("/iniciarSesion", dbController.iniciarSesion)
     router.post("/iniciarSesionGoogle", dbController.iniciarSesionGoogle)
     router.post("/iniciarSesionGithub", dbController.iniciarSesionGithub)
+    router.get("/cogerPosts", dbController.cogerPosts)
 
     return router;
 }
