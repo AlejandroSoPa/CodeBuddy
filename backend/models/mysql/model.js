@@ -4,18 +4,21 @@
 import mysql from "mysql2/promise"
 // import validateUUID from "uuid-validate"
 
+import dotenv from 'dotenv';
+dotenv.config(); // inicializar dotenv
+
 const config = {
-    host: "localhost",
-    port: 3306,
-    user: "super",
-    password: "1q2w·E4r5t6y",
-    database: "codeBuddy"
+    host: process.env.dbConnection,
+    port: process.env.dbPort,
+    user: process.env.dbUser,
+    password: process.env.dbPassword,
+    database: process.env.dbName
 }
 
 const connection = await mysql.createConnection(config)
 
-import {v4 as uuidv4} from "uuid";
-import {comprobarUsuarioRegister, comprobarUsuarioLogin} from "../../utils/modelUtils.js"
+import { v4 as uuidv4 } from "uuid";
+import { comprobarUsuarioRegister, comprobarUsuarioLogin } from "../../../utils/modelUtils.js"
 // Aqui es donde iran las consultas a la base de datos
 export class Model {
     static async helloWorld() {
@@ -24,33 +27,46 @@ export class Model {
 
     static async crearCuenta(nombreUsuario, email, contrasena, contrasena2, contrasenaEncriptada) {
         const usarioCorrecto = comprobarUsuarioRegister({ nombreUsuario, email, contrasena, contrasena2 });
+        let resultados = {
+            query: false,
+            nombreExiste: false,
+            emailExiste: false
+        }
+
         if (usarioCorrecto == false) {
-            return false
+            return resultados
         } else {
             try {
-                var duplicado = await connection.query(
-                    `SELECT COUNT(*) FROM Usuario WHERE correo = ? OR nombre = ?`,
-                    [email, nombreUsuario]
+                var [[{ contadorNombre }]] = await connection.query(
+                    `SELECT COUNT(*) as contadorNombre FROM Usuario WHERE nombre = ?`,
+                    [nombreUsuario]
                 )
-                
-                // Sacamos el valor del count debido que duplicado es una matriz multidimensional 
-                // debido a que connection.query devuelve un arreglo de resultados
-                const count = duplicado[0][0]['COUNT(*)'];
 
-                if (count === 0) {
+                var [[{ contadorEmail }]] = await connection.query(
+                    `SELECT COUNT(*) as contadorEmail FROM Usuario WHERE correo = ?`,
+                    [email]
+                )
+                if (contadorNombre === 1) {
+                    resultados.nombreExiste = true
+                }
+
+                if (contadorEmail === 1) {
+                    resultados.emailExiste = true
+                }
+
+                if (contadorNombre === 0 && contadorEmail === 0) {
                     const id = uuidv4();
                     await connection.query(
                         `INSERT INTO Usuario (id, nombre, correo, contrasena)
                         VALUES (?,?,?,?)`,
                         [id, nombreUsuario, email, contrasenaEncriptada]
                     )
-                } else {
-                    return false
+                    resultados.query = true
                 }
             } catch (e) {
                 console.error(e.message)
             }
-            return true
+            return resultados
         }
     }
 
@@ -67,7 +83,7 @@ export class Model {
                 // Sacamos el valor del count debido que duplicado es una matriz multidimensional 
                 // debido a que connection.query devuelve un arreglo de resultados
                 const count = duplicado[0][0]['COUNT(*)'];
-                
+
                 if (count != 0) {
                     return true
                 } else {
@@ -89,7 +105,7 @@ export class Model {
             // Sacamos el valor del count debido que duplicado es una matriz multidimensional 
             // debido a que connection.query devuelve un arreglo de resultados
             const count = duplicado[0][0]['COUNT(*)'];
-            
+
             if (count != 0) {
                 return true
             } else {
@@ -110,7 +126,7 @@ export class Model {
             // Sacamos el valor del count debido que duplicado es una matriz multidimensional 
             // debido a que connection.query devuelve un arreglo de resultados
             const count = duplicado[0][0]['COUNT(*)'];
-            
+
             if (count != 0) {
                 return true
             } else {

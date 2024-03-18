@@ -2,7 +2,7 @@ export function comprobarUsuarioRegister({ nombreUsuario, email, contrasena, con
     const usuarioNulo = comprobarObjetoNULL({ nombreUsuario, email, contrasena, contrasena2 })
     if (usuarioNulo == false) {
         return false
-    } else if (nombreUsuario.length <= 2 || nombreUsuario.length > 16 || email.length <= 5 || email.length > 255 || contrasena.length < 8 || contrasena.length > 60 || !/\d/.test(contrasena) || !/[\W_]/.test(contrasena || contrasena != contrasena2)){
+    } else if (nombreUsuario.length <= 2 || nombreUsuario.length > 16 || email.length <= 5 || email.length > 255 || contrasena.length < 8 || contrasena.length > 60 || !/\d/.test(contrasena) || !/[\W_]/.test(contrasena || contrasena != contrasena2)) {
         return false
     }
     return true
@@ -21,27 +21,27 @@ export function comprobarUsuarioLogin({ email, contrasena }) {
     const usuarioNulo = comprobarObjetoNULL({ email, contrasena })
     if (usuarioNulo == false) {
         return false
-    } else if (email.length <= 5 || email.length > 255 || contrasena.length < 8 || contrasena.length > 60 || !/\d/.test(contrasena) || !/[\W_]/.test(contrasena)){
+    } else if (email.length <= 5 || email.length > 255 || contrasena.length < 8 || contrasena.length > 60 || !/\d/.test(contrasena) || !/[\W_]/.test(contrasena)) {
         return false
     }
     return true
 }
 
 export function comprobarUsuarioGoogle({ email }) {
-    const usuarioNulo = comprobarObjetoNULL({ email})
+    const usuarioNulo = comprobarObjetoNULL({ email })
     if (usuarioNulo == false) {
         return false
-    } else if (email.length <= 5 || email.length > 255){
+    } else if (email.length <= 5 || email.length > 255) {
         return false
     }
     return true
 }
 
 export function comprobarUsuarioGithub({ email }) {
-    const usuarioNulo = comprobarObjetoNULL({ email})
+    const usuarioNulo = comprobarObjetoNULL({ email })
     if (usuarioNulo == false) {
         return false
-    } else if (email.length <= 5 || email.length > 255){
+    } else if (email.length <= 5 || email.length > 255) {
         return false
     }
     return true

@@ -1,6 +1,9 @@
 // import './componentsCSS/App.css'
 // import { EjemploComponentes } from './components/EjemploComponentes'
 import './App.css'
+import axios from 'axios';
+
+// Componentes
 import { Header } from './components/Header/Header'
 import { CrearCuenta } from './components/CrearCuenta/CrearCuenta'
 import { IniciarSesion } from './components/IniciarSesion/InicialSesion'
@@ -9,7 +12,6 @@ import { RecuperarContrasena } from './components/RecuperarContrasena/RecuperarC
 
 export function App() {
     // const props = { inicialTextoH2: "Adiós2", textoH3: "Adiós3" }
-
 
     return (
         // Hay que usar <></> para devolver varios elementos, <> </> es lo mismo que <React.Fragment></React.Fragment>
@@ -28,7 +30,8 @@ export function App() {
             }
             <Header />
             <main>
-                <RecuperarContrasena />
+                <CrearCuenta />
+
             </main>
             <div></div>
         </>
