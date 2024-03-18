@@ -29,7 +29,7 @@ export function App() {
             }
             <Header />
             <main>
-                <CrearCuenta />
+                <IniciarSesion />
 
             </main>
             <div></div>

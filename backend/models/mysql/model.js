@@ -83,7 +83,6 @@ export class Model {
                 // Sacamos el valor del count debido que duplicado es una matriz multidimensional 
                 // debido a que connection.query devuelve un arreglo de resultados
                 const count = duplicado[0][0]['COUNT(*)'];
-
                 if (count != 0) {
                     return true
                 } else {

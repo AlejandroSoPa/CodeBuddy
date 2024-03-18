@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import axios from 'axios';
 import './CrearCuenta.css'
+
+import axios from 'axios'
+
 
 export function CrearCuenta() {
     let terminos = false
@@ -9,10 +11,10 @@ export function CrearCuenta() {
         email: '',
         password: '',
         password2: ''
-    });
+    })
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
+        event.preventDefault()
 
         const { nombre, email, password, password2 } = comprobarUsuarioRegister(formData)
         if (!nombre) {
@@ -58,9 +60,9 @@ export function CrearCuenta() {
     }
 
     const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value });
-    };
+        const { name, value } = event.target
+        setFormData({ ...formData, [name]: value })
+    }
 
     return (
         <section className="crearCuenta">
@@ -69,10 +71,10 @@ export function CrearCuenta() {
 
             <span className="formularioTitulo">Escribe tus credenciales abajo.</span>
             <form onSubmit={handleSubmit}>
-                <input type="text" name="nombre" className="nombre" placeholder='Nombre de usuario' minlength="3" maxlength="16" required onChange={handleChange} />
-                <input type="email" name="email" className="email" placeholder='Correo electrónico' minlength="5" maxlength="255" required onChange={handleChange} />
-                <input type="password" name="password" className="password" placeholder='Contraseña' minlength="8" maxlength="60" required onChange={handleChange} />
-                <input type="password" name="password2" className="password2" placeholder='Repetir contraseña' minlength="8" maxlength="60" required onChange={handleChange} />
+                <input type="text" name="nombre" className="nombre" placeholder='Nombre de usuario' minLength="3" maxLength="16" required onChange={handleChange} />
+                <input type="email" name="email" className="email" placeholder='Correo electrónico' minLength="5" maxLength="255" required onChange={handleChange} />
+                <input type="password" name="password" className="password" placeholder='Contraseña' minLength="8" maxLength="60" required onChange={handleChange} />
+                <input type="password" name="password2" className="password2" placeholder='Repetir contraseña' minLength="8" maxLength="60" required onChange={handleChange} />
                 {
                     terminos ?
                         <>
