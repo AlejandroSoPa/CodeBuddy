@@ -8,6 +8,10 @@ export const createRouter = () => {
 
     router.get("/", dbController.itWorks)
     router.get("/hello", dbController.helloWorld)
+    router.post("/crearCuenta", dbController.crearCuenta)
+    router.post("/iniciarSesion", dbController.iniciarSesion)
+    router.post("/iniciarSesionGoogle", dbController.iniciarSesionGoogle)
+    router.post("/iniciarSesionGithub", dbController.iniciarSesionGithub)
 
     return router;
 }
