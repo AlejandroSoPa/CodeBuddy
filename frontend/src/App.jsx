@@ -1,7 +1,6 @@
 // import './componentsCSS/App.css'
 // import { EjemploComponentes } from './components/EjemploComponentes'
 import './App.css'
-import axios from 'axios';
 
 // Componentes
 import { Header } from './components/Header/Header'

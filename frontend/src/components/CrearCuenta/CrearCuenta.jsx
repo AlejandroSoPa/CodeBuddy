@@ -89,9 +89,9 @@ export function CrearCuenta() {
 
 function comprobarUsuarioRegister({ nombre, email, password, password2 }) {
     return {
-        nombre: nombre.length >= 2 && nombre.length < 16 && nombre != null,
-        email: email.length >= 5 && email.length < 255 && email != null,
-        password: password.length >= 8 && password.length < 60 && /\d/.test(password) && /[\W_]/.test(password) && password != null,
+        nombre: nombre.length >= 2 && nombre.length <= 16 && nombre != null,
+        email: email.length >= 5 && email.length <= 255 && email != null,
+        password: password.length >= 8 && password.length <= 60 && /\d/.test(password) && /[\W_]/.test(password) && password != null,
         password2: password === password2 && password2 != null
     }
 }
