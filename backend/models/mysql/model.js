@@ -76,14 +76,15 @@ export class Model {
             return false
         } else {
             try {
-                var duplicado = await connection.query(
-                    `SELECT COUNT(*) FROM Usuario WHERE correo = ? AND contrasena = ?`,
+                var [[{ contador, id }]] = await connection.query(
+                    `SELECT COUNT(*) as contador, id FROM Usuario WHERE correo = ? AND contrasena = ?`,
                     [email, contrasenaEncriptada]
                 )
                 // Sacamos el valor del count debido que duplicado es una matriz multidimensional 
                 // debido a que connection.query devuelve un arreglo de resultados
-                const count = duplicado[0][0]['COUNT(*)'];
-                if (count != 0) {
+                // const count = duplicado[0][0]['COUNT(*)'];
+                console.log(contador, id)
+                if (contador != 0) {
                     return true
                 } else {
                     return false

@@ -1,6 +1,7 @@
-header {
+header.global {
     width: calc(98% - 32px);
     height: 56px;
+    min-height: 56px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0px 3px 3px 0 rgba(0, 0, 0, 0.2);
@@ -14,47 +15,47 @@ header {
     align-self: center;
 }
 
-header nav {
+header.global nav {
     display: flex;
     align-items: center;
     flex: 1;
 }
 
-header .seccion2 {
+header.global .seccion2 {
     justify-content: center;
 }
 
-header .seccion3 {
+header.global .seccion3 {
     justify-content: flex-end;
 }
 
-header .seccion1>*,
-header .seccion3>a {
+header.global .seccion1>*,
+header.global .seccion3>a {
     margin-right: 17px;
 }
 
-header a,
-header .headerUsuario {
+header.global a,
+header.global .headerUsuario {
     display: flex;
     align-items: center;
     text-decoration: none;
     color: black;
 }
 
-header .seccion1 a img,
-header .headerUsuario img {
+header.global .seccion1 a img,
+header.global .headerUsuario img {
     margin-right: 5px;
 }
 
-header a:hover {
+header.global a:hover {
     color: #2EC4B6;
 }
 
-header a:hover:not(.logo) img {
+header.global a:hover:not(.logo) img {
     filter: invert(65%) sepia(73%) saturate(405%) hue-rotate(124deg) brightness(87%) contrast(91%);
 }
 
-header .seccion3>a {
+header.global .seccion3>a {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -62,18 +63,18 @@ header .seccion3>a {
     width: 40px;
 }
 
-header .seccion3 img {
+header.global .seccion3 img {
     width: 32px;
     height: 32px;
 }
 
-header .logo img {
+header.global .logo img {
     margin: 0;
     width: 36px;
     height: 36px;
 }
 
-header .tema {
+header.global .tema {
     position: relative;
     display: flex;
     box-shadow: inset 0px 2px 3px 0 rgba(0, 0, 0, 0.2);
@@ -81,7 +82,7 @@ header .tema {
     overflow: hidden;
 }
 
-header .tema button {
+header.global .tema button {
     height: 40px;
     width: 40px;
     border: none;
@@ -94,7 +95,7 @@ header .tema button {
     cursor: pointer;
 }
 
-header .tema .fondo {
+header.global .tema .fondo {
     position: absolute;
     top: 0;
     left: 0;
@@ -105,14 +106,14 @@ header .tema .fondo {
     transition: transform 300ms;
 }
 
-header .tema .fondo.claro {
+header.global .tema .fondo.claro {
     animation: moverFondoIzquierda 300ms linear;
 
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
 }
 
-header .tema .fondo.oscuro {
+header.global .tema .fondo.oscuro {
     animation: moverFondoDerecha 300ms linear;
     transform: translateX(100%);
 

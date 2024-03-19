@@ -25,11 +25,6 @@ CREATE TABLE Usuario (
 
 );
 
-CREATE TABLE Plataforma (
-    id INT PRIMARY KEY,
-    nombre VARCHAR(255)
-);
-
 CREATE TABLE PostForo (
     id VARCHAR(255) PRIMARY KEY,
     texto TEXT,
@@ -48,8 +43,30 @@ CREATE TABLE PostProyecto (
     fechaCreacion DATE,
     estado ENUM("inicializado", "finalizado", "cancelado", "buscando" ),
     idUsuario VARCHAR(255),
-    idPlataforma INT,
     FOREIGN KEY (idUsuario) REFERENCES Usuario(id),
+);
+
+CREATE TABLE Etiqueta (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(255)
+);
+
+CREATE TABLE PostProyectoEtiqueta (
+    idPostProyecto VARCHAR(255),
+    idEtiqueta INT,
+    FOREIGN KEY (idPostProyecto) REFERENCES PostProyecto(id),
+    FOREIGN KEY (idEtiqueta) REFERENCES Etiqueta(id)
+);
+
+CREATE TABLE Plataforma (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(255)
+);
+
+CREATE TABLE PostProyectoPlataforma (
+    idPostProyecto VARCHAR(255),
+    idPlataforma INT,
+    FOREIGN KEY (idPostProyecto) REFERENCES PostProyecto(id),
     FOREIGN KEY (idPlataforma) REFERENCES Plataforma(id)
 );
 

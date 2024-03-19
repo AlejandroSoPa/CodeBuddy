@@ -21,10 +21,20 @@ body {
     flex-direction: column;
 }
 
-#root main {
+#root>main {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     flex: 1;
+}
+
+.posts {
+    width: 85%;
+    height: fit-content;
+    background-color: white;
+    border-radius: 25px;
+    padding: 40px 20px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2), -3px 0px 3px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
 }

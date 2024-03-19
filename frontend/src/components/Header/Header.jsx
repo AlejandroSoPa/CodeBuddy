@@ -6,7 +6,7 @@ export function Header({ isLogged = false, nombreUsuario, mostrarInput = false }
     const [modo, setModo] = useState("claro");
 
     return (
-        <header>
+        <header className="global">
             <nav className="seccion1">
                 <a href="/home" className="logo">
                     <img src="http://localhost:5173/src/assets/logo_88x88.png" alt="Logo de CodeBuddy" />

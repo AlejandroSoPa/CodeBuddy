@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node --watch ./backend/app.js",
     "start": "npm-run-all -p front back",
-    "front": "cd frontend & npm run dev",
+    "front": "cd frontend && npm run dev",
     "back": "node --watch ./backend/app.js"
   },
   "repository": {

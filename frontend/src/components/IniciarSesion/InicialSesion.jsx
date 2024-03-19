@@ -3,7 +3,6 @@ import './IniciarSesion.css'
 
 import axios from 'axios'
 
-
 export function IniciarSesion() {
 
     const [formData, setFormData] = useState({
@@ -16,7 +15,7 @@ export function IniciarSesion() {
 
         try {
             const response = await axios.post("http://localhost:3000/iniciarSesion", formData)
-            console.log(response.data)
+            // console.log(response.data)
             if (response.data.status === "KO") {
                 alert("El correo electrónico o la contraseña son incorrectos")
             }
