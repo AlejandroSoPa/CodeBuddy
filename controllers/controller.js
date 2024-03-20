@@ -14,27 +14,41 @@ export class Controller {
     }
 
     crearCuenta = async (req, res) => {
-        let result = { status: "KO", message: "Error al crear la cuenta", data: {} }
+        let result = {
+            status: "KO", message: "Error al crear la cuenta", data: {
+                nombreExiste: false,
+                emailExiste: false
+            }
+        }
         let cadena = req.body.password
+
         const contrasenaEncriptada = crypto.createHash('sha512').update(cadena).digest('hex');
-        const response = await Model.crearCuenta(req.body.nombre, req.body.email, req.body.password, req.body.password2, contrasenaEncriptada)
-        if (response) {
-            result = { status: "OK", message: "Cuenta creada", data: {} }
+        const { query, nombreExiste, emailExiste } = await Model.crearCuenta(req.body.nombre, req.body.email, req.body.password, req.body.password2, contrasenaEncriptada)
+        if (query) {
+            result.status = "OK"
+            result.message = "Cuenta creada"
         } else {
-            result = { status: "KO", message: "Error al crear la cuenta", data: {} }
+            result.message = "Error al crear la cuenta"
+            result.data.nombreExiste = nombreExiste
+            result.data.emailExiste = emailExiste
         }
         res.json(result)
     }
 
     iniciarSesion = async (req, res) => {
-        let result = { status: "KO", message: "Error al iniciar sesion", data: {} }
+        let result = { status: "KO", message: "Error al iniciar sesion", data: {
+            emailExiste: false,
+            id: ''
+            } 
+        }
+
         let cadena = req.body.password
         const contrasenaEncriptada = crypto.createHash('sha512').update(cadena).digest('hex');
         const response = await Model.iniciarSesion(req.body.email, req.body.password, contrasenaEncriptada)
         if (response) {
             const usuario = {
                 email: req.body.email,
-                password: contrasenaEncriptada,
+                id: response.id
             }
 
             const token = jwt.sign(usuario, process.env.secretKey, { expiresIn: "4h" })
@@ -81,12 +95,12 @@ export class Controller {
     }
 
     cogerPosts = async (req, res) => {
-        let result = { status: "KO", message: "Error al coger los posts", data: {} }
-        const response = await Model.cogerPosts()
+        let result = { status: "KO", message: "Error al coger los proyectos", data: {} }
+        const response = await Model.cogerPosts(req.body.titulo)
         if (response) {
             result = { status: "OK", message: "Posts cogidos", data: response }
         } else {
-            result = { status: "KO", message: "Error al coger los posts", data: {} }
+            result = { status: "KO", message: "Error al coger los proyectos", data: {} }
         }
         res.json(result)
     }

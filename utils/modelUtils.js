@@ -60,3 +60,31 @@ export function comprobarUsuarioGithub({ email }) {
     }
     return true
 }
+
+export function comprobarTitulo({ titulo }) {
+    const usuarioNulo = comprobarObjetoNULL({ titulo})
+    if (usuarioNulo == false) {
+        return false
+    }
+    return true
+}
+
+export function verificarToken(token) {
+    let respuesta
+
+    jwt.verify(token, secretKey, (error, decodificado) => {
+        if (error) {
+            // El token no es válido
+            console.error('Error al verificar el token:', error.message);
+            // Puedes manejar el error de acuerdo a tus necesidades (por ejemplo, respondiendo con un error 401)
+            respuesta = false
+        } else {
+            // El token es válido
+            // console.log('Token verificado con éxito:', decodedToken);
+            // Puedes acceder a la información del usuario a través de decodedToken
+            respuesta = decodificado
+        }
+    })
+    
+    return respuesta
+}
