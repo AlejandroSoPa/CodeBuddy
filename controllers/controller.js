@@ -95,14 +95,22 @@ export class Controller {
     }
 
     cogerPosts = async (req, res) => {
-        let result = { status: "KO", message: "Error al coger los proyectos", data: {} }
-        const response = await Model.cogerPosts(req.body.titulo)
-        if (response) {
-            result = { status: "OK", message: "Posts cogidos", data: response }
-        } else {
-            result = { status: "KO", message: "Error al coger los proyectos", data: {} }
+        try {
+            let result;
+            const response = await Model.cogerPosts(req, req.body.titulo);
+            
+            if (response !== false) {
+                console.log(response)
+                result = { status: "OK", message: "Posts obtenidos", data: response };
+            } else {
+                result = { status: "KO", message: "Error al obtener los proyectos", data: {} };
+            }
+    
+            res.json(result);
+        } catch (error) {
+            console.error("Error en el controlador cogerPosts:", error.message);
+            res.status(500).json({ status: "KO", message: "Error interno del servidor" });
         }
-        res.json(result)
     }
 
 }

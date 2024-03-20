@@ -1,10 +1,10 @@
 CREATE TABLE Idiomas (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(255)
 );
 
 CREATE TABLE Nivel (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     nombre ENUM("estudiante", "profesional", "hobbie")
 );
 
@@ -25,38 +25,55 @@ CREATE TABLE Usuario (
 
 );
 
-CREATE TABLE Plataforma (
-    id INT PRIMARY KEY,
-    nombre VARCHAR(255)
-);
-
 CREATE TABLE PostForo (
     id VARCHAR(255) PRIMARY KEY,
     texto TEXT,
     idUsuario VARCHAR(255),
-    fechaCreacion DATE,
+    fechaCreacion DATETIME,
     FOREIGN KEY (idUsuario) REFERENCES Usuario(id)
 );
 
-CREATE TABLE PostProyecto (
-    id VARCHAR(255) PRIMARY KEY,
-    titulo VARCHAR(255),
-    descripcion TEXT,
-    duracionEstimada INT,
-    limiteUsuarios INT,
-    rutaLogotipo VARCHAR(255),
-    fechaCreacion DATE,
-    estado ENUM("inicializado", "finalizado", "cancelado", "buscando" ),
-    idUsuario VARCHAR(255),
+    CREATE TABLE PostProyecto (
+        id VARCHAR(255) PRIMARY KEY,
+        titulo VARCHAR(255),
+        descripcion TEXT,
+        duracionEstimada INT,
+        limiteUsuarios INT,
+        rutaLogotipo VARCHAR(255),
+        fechaCreacion DATETIME,
+        estado ENUM("inicializado", "finalizado", "cancelado", "buscando" ),
+        idUsuario VARCHAR(255),
+        FOREIGN KEY (idUsuario) REFERENCES Usuario(id)
+    );
+
+CREATE TABLE Etiqueta (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(255)
+);
+
+CREATE TABLE PostProyectoEtiqueta (
+    idPostProyecto VARCHAR(255),
+    idEtiqueta INT,
+    FOREIGN KEY (idPostProyecto) REFERENCES PostProyecto(id),
+    FOREIGN KEY (idEtiqueta) REFERENCES Etiqueta(id)
+);
+
+CREATE TABLE Plataforma (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(255)
+);
+
+CREATE TABLE PostProyectoPlataforma (
+    idPostProyecto VARCHAR(255),
     idPlataforma INT,
-    FOREIGN KEY (idUsuario) REFERENCES Usuario(id),
+    FOREIGN KEY (idPostProyecto) REFERENCES PostProyecto(id),
     FOREIGN KEY (idPlataforma) REFERENCES Plataforma(id)
 );
 
 CREATE TABLE Comentario (
     id VARCHAR(255) PRIMARY KEY,
     contenido TEXT,
-    fechaCreacion DATE,
+    fechaCreacion DATETIME,
     idUsuario VARCHAR(255),
     idPostProyecto VARCHAR(255) NULL,
     idPostForo VARCHAR(255) NULL,
@@ -90,7 +107,7 @@ CREATE TABLE ChatUsuario (
 CREATE TABLE Mensajes (
     id VARCHAR(255) PRIMARY KEY,
     contenido VARCHAR(280),
-    fechaEnvio DATE,
+    fechaEnvio DATETIME,
     idChat VARCHAR(255),
     idUsuario VARCHAR(255),
     FOREIGN KEY (idChat) REFERENCES Chat(id),
@@ -100,7 +117,7 @@ CREATE TABLE Mensajes (
 CREATE TABLE Notificacion (
     id VARCHAR(255) PRIMARY KEY,
     contenido TEXT,
-    fechaEnvio DATE,
+    fechaEnvio DATETIME,
     idUsuario VARCHAR(255),
     FOREIGN KEY (idUsuario) REFERENCES Usuario(id)
 );
@@ -119,7 +136,7 @@ CREATE TABLE Medalla (
 );
 
 CREATE TABLE UsuarioMedalla (
-    fechaObtencion DATE,
+    fechaObtencion DATETIME,
     idUsuario VARCHAR(255),
     idMedalla VARCHAR(255),
     FOREIGN KEY (idUsuario) REFERENCES Usuario(id),
@@ -129,21 +146,11 @@ CREATE TABLE UsuarioMedalla (
 CREATE TABLE Invitacion (
     id VARCHAR(255) PRIMARY KEY,
     mensaje TEXT,
-    fechaEnvio DATE,
+    fechaEnvio DATETIME,
     idUsuarioRemitente VARCHAR(255), -- Usuario que envia la invitacion
     idUsuarioReceptor VARCHAR(255), -- Usuario que recibe la invitacion
     idPostProyecto VARCHAR(255),
     FOREIGN KEY (idUsuarioRemitente) REFERENCES Usuario(id),
     FOREIGN KEY (idUsuarioReceptor) REFERENCES Usuario(id),
     FOREIGN KEY (idPostProyecto) REFERENCES PostProyecto(id)
-);
-
-CREATE TABLE AuthGoogle (
-    id INT PRIMARY KEY,
-    googleId VARCHAR(255) UNIQUE,
-    email VARCHAR(255),
-    name VARCHAR(255),
-    profilePicture VARCHAR(255),
-    idUsuario VARCHAR(255),
-    FOREIGN KEY (idUsuario) REFERENCES Usuario(id)
 );
