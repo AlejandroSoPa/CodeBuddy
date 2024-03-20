@@ -3,7 +3,6 @@ import cors from 'cors';
 import { config } from 'dotenv';
 import limite from 'express-rate-limit'
 import compresor from 'compression';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 
 import { createRouter } from './routes/routes.js';
 

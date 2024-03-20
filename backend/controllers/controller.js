@@ -2,6 +2,8 @@ import { Model } from "../models/mysql/model.js"
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
 
+import { verificarToken, comprobarPostProyecto } from "../../utils/modelUtils.js"
+
 export class Controller {
 
     itWorks = async (req, res) => {
@@ -36,7 +38,8 @@ export class Controller {
     }
 
     iniciarSesion = async (req, res) => {
-        let result = {status: "KO", message: "Error al iniciar sesion", data: {}
+        let result = {
+            status: "KO", message: "Error al iniciar sesion", data: {}
         }
 
         let cadena = req.body.password
@@ -50,8 +53,8 @@ export class Controller {
             const secretKey = process.env.secretKey
 
             const token = jwt.sign(usuario, process.env.secretKey, { expiresIn: "4h" })
-            result = { status: "OK", message: "Inicio de sesion correcto", data: { "token":token } }
-        
+            result = { status: "OK", message: "Inicio de sesion correcto", data: { "token": token } }
+
         } else {
             result = { status: "KO", message: "Error al iniciar sesion", data: {} }
         }
@@ -67,8 +70,8 @@ export class Controller {
             }
 
             const token = jwt.sign(usuario, process.env.secretKey, { expiresIn: "2h" })
-            result = { status: "OK", message: "Inicio de sesion correcto", data: { "token":token } }
-        
+            result = { status: "OK", message: "Inicio de sesion correcto", data: { "token": token } }
+
         } else {
             result = { status: "KO", message: "Error al iniciar sesion", data: {} }
         }
@@ -84,8 +87,8 @@ export class Controller {
             }
 
             const token = jwt.sign(usuario, process.env.secretKey, { expiresIn: "2h" })
-            result = { status: "OK", message: "Inicio de sesion correcto", data: { "token":token } }
-        
+            result = { status: "OK", message: "Inicio de sesion correcto", data: { "token": token } }
+
         } else {
             result = { status: "KO", message: "Error al iniciar sesion", data: {} }
         }
@@ -134,14 +137,14 @@ export class Controller {
         try {
             let result;
             const response = await Model.cogerPosts(req, req.body.titulo);
-            
+
             if (response !== false) {
                 console.log(response)
                 result = { status: "OK", message: "Posts obtenidos", data: response };
             } else {
                 result = { status: "KO", message: "Error al obtener los proyectos", data: {} };
             }
-    
+
             res.json(result);
         } catch (error) {
             console.error("Error en el controlador cogerPosts:", error.message);
