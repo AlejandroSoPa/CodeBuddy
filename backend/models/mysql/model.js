@@ -1,25 +1,24 @@
 // Aqui iria toda la conexion a la base de datos
 
 
+import mysql from "mysql2/promise"
 // import validateUUID from "uuid-validate"
 
-import {v4 as uuidv4} from "uuid";
-import {comprobarUsuarioRegister, comprobarUsuarioLogin, comprobarTitulo} from "../../utils/modelUtils.js"
-
-//const connection = conexionBBDD()
-
-import mysql from "mysql2/promise"
+import dotenv from 'dotenv';
+dotenv.config(); // inicializar dotenv
 
 const config = {
-    host: "localhost",
-    port: 3306,
-    user: "super",
-    password: "1q2w·E4r5t6y",
-    database: "codeBuddy"
+    host: process.env.dbConnection,
+    port: process.env.dbPort,
+    user: process.env.dbUser,
+    password: process.env.dbPassword,
+    database: process.env.dbName
 }
 
 const connection = await mysql.createConnection(config)
 
+import { v4 as uuidv4 } from "uuid";
+import { comprobarUsuarioRegister, comprobarUsuarioLogin } from "../../../utils/modelUtils.js"
 // Aqui es donde iran las consultas a la base de datos
 export class Model {
     static async helloWorld() {
@@ -75,7 +74,6 @@ export class Model {
         const usarioCorrecto = comprobarUsuarioLogin({ email, contrasena });
         let resultados = {
             query: false,
-            emailExiste: false,
             id: ''
         }
         if (usarioCorrecto == false) {
@@ -86,18 +84,10 @@ export class Model {
                     `SELECT COUNT(*) as contador, id FROM Usuario WHERE correo = ? AND contrasena = ?`,
                     [email, contrasenaEncriptada]
                 )
-                
-                // Sacamos el valor del count debido que duplicado es una matriz multidimensional 
-                // debido a que connection.query devuelve un arreglo de resultados
-                // const count = duplicado[0][0]['COUNT(*)'];
-                
-                console.log(contador, id)
-
-                resultados.id = id
-
                 if (contador != 0) {
                     resultados.query = true
-                    resultados.emailExiste = true
+                    resultados.id = id
+
                     return resultados
                 } else {
                     return false
@@ -118,7 +108,7 @@ export class Model {
             // Sacamos el valor del count debido que duplicado es una matriz multidimensional 
             // debido a que connection.query devuelve un arreglo de resultados
             const count = duplicado[0][0]['COUNT(*)'];
-            
+
             if (count != 0) {
                 return true
             } else {
@@ -139,7 +129,7 @@ export class Model {
             // Sacamos el valor del count debido que duplicado es una matriz multidimensional 
             // debido a que connection.query devuelve un arreglo de resultados
             const count = duplicado[0][0]['COUNT(*)'];
-            
+
             if (count != 0) {
                 return true
             } else {
@@ -150,58 +140,47 @@ export class Model {
         }
     }
 
-    static async cogerPosts(req, titulo) {
-        const tituloComprobado = comprobarTitulo({ titulo });
-        if (!tituloComprobado) {
-            return false;
-        } else {
-            try {
-                const tituloProyecto = `%${titulo}%`; // Agregamos los caracteres comodín para buscar coincidencias parciales
-                
-                const [contador] = await connection.query(
-                    "SELECT COUNT(*) FROM PostProyecto WHERE titulo = ?;",
-                    [tituloProyecto]
+    static async crearNuevaProyecto({ titulo, descripcion, duracionEstimada, limiteUsuarios, etiquetas, plataformas, idUsuario }) {
+        let transaction
+
+        try {
+            const id = uuidv4()
+
+            transaction = await connection.beginTransaction()
+
+            await connection.query(
+                `INSERT INTO PostProyecto (id, titulo, descripcion, duracionEstimada, limiteUsuarios, fechaCreacion, estado, idUsuario)
+                VALUES (?,?,?,?,?, NOW(), "buscando", ?)`,
+                [id, titulo, descripcion, duracionEstimada, limiteUsuarios, idUsuario],
+                { transaction }
+            )
+
+            for (let idEtiqueta of etiquetas) {
+                await connection.query(
+                    `INSERT INTO PostProyectoEtiqueta (idPostProyecto, idEtiqueta)
+                    VALUES (?,?)`,
+                    [id, idEtiqueta],
+                    { transaction }
                 )
-
-                const offset = parseInt(req.query.offset) || 0;
-                const limit = 10;
-
-                if (contador !== 0) {
-                    const [proyectos] = await connection.query(
-                        `SELECT id, titulo, descripcion, limiteUsuarios, estado 
-                        FROM PostProyecto 
-                        WHERE titulo LIKE ? 
-                        ORDER BY fechaCreacion ASC 
-                        LIMIT ?, ?`,
-                        [tituloProyecto, offset, limit]
-                    )
-                    for (let i = 0; i < proyectos.length; i++) {
-                        const [etiquetas] = await connection.query(
-                            `SELECT id, nombre 
-                            FROM Etiqueta e
-                            INNER JOIN PostProyectoEtiqueta pe ON e.id = pe.idEtiqueta
-                            WHERE pe.idPostProyecto = ?`,
-                            [proyectos[i].id]
-                        )
-                        proyectos[i].etiquetas = etiquetas
-                    }
-                    for (let i = 0; i < proyectos.length; i++) {
-                        const [plataformas] = await connection.query(
-                            `SELECT id, nombre 
-                            FROM Plataforma p
-                            INNER JOIN PostProyectoPlataforma pp ON p.id = pp.idPlataforma
-                            WHERE pp.idPostProyecto = ?`,
-                            [proyectos[i].id]
-                        )
-                        proyectos[i].plataformas = plataformas
-                    }
-                    return proyectos
-                } else return false
-            } catch (e) {
-                console.error(e.message);
-                // Manejar el error adecuadamente, puedes lanzar una excepción, enviar un mensaje de error, etc.
-                return false;
             }
+
+            for (let idPlataforma of plataformas) {
+                await connection.query(
+                    `INSERT INTO PostProyectoPlataforma (idPostProyecto, idPlataforma)
+                    VALUES (?,?)`,
+                    [id, idPlataforma],
+                    { transaction }
+                )
+            }
+
+            await connection.commit(transaction)
+            return true
+        } catch (e) {
+
+            await connection.rollback(transaction)
+
+            console.error(e.message)
+            return false
         }
     }
 }

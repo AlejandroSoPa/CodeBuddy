@@ -1,0 +1,78 @@
+.postProyectoPreview {
+    width: calc(100% - 30px);
+    min-height: fit-content;
+    max-height: 300px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: inset 0px 2px 3px 0 rgba(0, 0, 0, 0.2);
+
+    display: flex;
+}
+
+.postProyectoPreview:hover {
+    background-color: #F3F3F3;
+    cursor: pointer;
+}
+
+.postProyectoPreview:not(.postProyectoPreview:last-child) {
+    margin-bottom: 15px;
+}
+
+.postProyectoPreview main {
+    width: 70%;
+}
+
+.postProyectoPreview main h2 {
+    font-size: 30px;
+    margin: 0;
+    margin-bottom: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.postProyectoPreview main p {
+    font-size: 15px;
+    margin: 0;
+    line-height: 20px;
+    display: -webkit-box;
+    /* Numero de lineas que puede tener */
+    -webkit-line-clamp: 10;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.postProyectoPreview aside {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.postProyectoPreview aside div {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+}
+
+.postProyectoPreview aside span {
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.postProyectoPreview aside .etiquetas {
+    margin-bottom: 10px;
+}
+
+.postProyectoPreview aside .etiqueta {
+    background-color: #2EC4B6;
+    color: white;
+}
+
+.postProyectoPreview aside .plataforma {
+    background-color: #5a61e2;
+    color: white;
+}

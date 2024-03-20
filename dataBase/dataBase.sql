@@ -33,18 +33,18 @@ CREATE TABLE PostForo (
     FOREIGN KEY (idUsuario) REFERENCES Usuario(id)
 );
 
-    CREATE TABLE PostProyecto (
-        id VARCHAR(255) PRIMARY KEY,
-        titulo VARCHAR(255),
-        descripcion TEXT,
-        duracionEstimada INT,
-        limiteUsuarios INT,
-        rutaLogotipo VARCHAR(255),
-        fechaCreacion DATETIME,
-        estado ENUM("inicializado", "finalizado", "cancelado", "buscando" ),
-        idUsuario VARCHAR(255),
-        FOREIGN KEY (idUsuario) REFERENCES Usuario(id)
-    );
+CREATE TABLE PostProyecto (
+    id VARCHAR(255) PRIMARY KEY,
+    titulo VARCHAR(255),
+    descripcion TEXT,
+    duracionEstimada INT,
+    limiteUsuarios INT,
+    rutaLogotipo VARCHAR(255),
+    fechaCreacion DATETIME,
+    estado ENUM("inicializado", "finalizado", "cancelado", "buscando" ),
+    idUsuario VARCHAR(255),
+    FOREIGN KEY (idUsuario) REFERENCES Usuario(id)
+);
 
 CREATE TABLE Etiqueta (
     id INT PRIMARY KEY AUTO_INCREMENT,
