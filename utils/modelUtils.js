@@ -123,27 +123,6 @@ export function comprobarTitulo({ titulo }) {
     return true
 }
 
-export function verificarToken(token) {
-    let respuesta
-    const secretKey = process.env.secretKey
-
-    jwt.verify(token, secretKey, (error, decodificado) => {
-        if (error) {
-            // El token no es válido
-            console.error('Error al verificar el token:', error.message);
-            // Puedes manejar el error de acuerdo a tus necesidades (por ejemplo, respondiendo con un error 401)
-            respuesta = false
-        } else {
-            // El token es válido
-            // console.log('Token verificado con éxito:', decodedToken);
-            // Puedes acceder a la información del usuario a través de decodedToken
-            respuesta = decodificado
-        }
-    })
-
-    return respuesta
-}
-
 export function comprobarPostProyecto({ titulo, descripcion, duracionEstimada, limiteUsuarios, etiquetas, plataformas }) {
     return titulo && titulo.length > 0 && titulo.length <= 255
         && descripcion && descripcion.length > 0 && descripcion.length <= 255
@@ -172,7 +151,6 @@ export function verificarToken(token) {
             respuesta = false
         } else {
             // El token es válido
-            // console.log('Token verificado con éxito:', decodedToken);
             // Puedes acceder a la información del usuario a través de decodedToken
             respuesta = decodificado
         }
