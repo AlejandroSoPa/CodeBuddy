@@ -44,34 +44,12 @@ export function App() {
             }
             <Header />
             <main>
-                <div className='posts'>
+                <IniciarSesion />
+                {/* <div className='posts'>
                     <PostProyectoPreview {...ejemploProps} />
-                    <PostProyectoPreview
-                        id="124"
-                        titulo="Titulo"
-                        descripcion="Descripcion"
-                        etiquetas={["PHP", "HTML", "CSS", "JavaScript", "Laravel", "React"]}
-                        plataformas={["WEB", "MOVIL", "Desktop"]}
-                    />
-                    <PostProyectoPreview
-                        id="125"
-                        titulo="Titulo"
-                        descripcion="Descripcion"
-                        etiquetas={["PHP", "HTML", "CSS", "JavaScript", "Laravel", "React"]}
-                        plataformas={["Desktop", "MOVIL", "Web"]}
-                    />
-                    <PostProyectoPreview
-                        id="126"
-                        titulo="Titulo"
-                        descripcion="Descripcion"
-                        etiquetas={["PHP", "HTML", "CSS", "JavaScript", "Laravel", "React"]}
-                        plataformas={["WEB", "MOVIL", "Desktop"]}
-                    />
-
-                </div>
+                </div> */}
 
             </main>
-            <div></div>
         </>
     )
 }

@@ -72,6 +72,10 @@ export class Model {
 
     static async iniciarSesion(email, contrasena, contrasenaEncriptada) {
         const usarioCorrecto = comprobarUsuarioLogin({ email, contrasena });
+        let resultados = {
+            query: false,
+            id: ''
+        }
         if (usarioCorrecto == false) {
             return false
         } else {
@@ -80,12 +84,11 @@ export class Model {
                     `SELECT COUNT(*) as contador, id FROM Usuario WHERE correo = ? AND contrasena = ?`,
                     [email, contrasenaEncriptada]
                 )
-                // Sacamos el valor del count debido que duplicado es una matriz multidimensional 
-                // debido a que connection.query devuelve un arreglo de resultados
-                // const count = duplicado[0][0]['COUNT(*)'];
-                console.log(contador, id)
                 if (contador != 0) {
-                    return true
+                    resultados.query = true
+                    resultados.id = id
+
+                    return resultados
                 } else {
                     return false
                 }
@@ -134,6 +137,50 @@ export class Model {
             }
         } catch (e) {
             console.error(e.message)
+        }
+    }
+
+    static async crearNuevaProyecto({ titulo, descripcion, duracionEstimada, limiteUsuarios, etiquetas, plataformas, idUsuario }) {
+        let transaction
+
+        try {
+            const id = uuidv4()
+
+            transaction = await connection.beginTransaction()
+
+            await connection.query(
+                `INSERT INTO PostProyecto (id, titulo, descripcion, duracionEstimada, limiteUsuarios, fechaCreacion, estado, idUsuario)
+                VALUES (?,?,?,?,?, NOW(), "buscando", ?)`,
+                [id, titulo, descripcion, duracionEstimada, limiteUsuarios, idUsuario],
+                { transaction }
+            )
+
+            for (let idEtiqueta of etiquetas) {
+                await connection.query(
+                    `INSERT INTO PostProyectoEtiqueta (idPostProyecto, idEtiqueta)
+                    VALUES (?,?)`,
+                    [id, idEtiqueta],
+                    { transaction }
+                )
+            }
+
+            for (let idPlataforma of plataformas) {
+                await connection.query(
+                    `INSERT INTO PostProyectoPlataforma (idPostProyecto, idPlataforma)
+                    VALUES (?,?)`,
+                    [id, idPlataforma],
+                    { transaction }
+                )
+            }
+
+            await connection.commit(transaction)
+            return true
+        } catch (e) {
+
+            await connection.rollback(transaction)
+
+            console.error(e.message)
+            return false
         }
     }
 }
