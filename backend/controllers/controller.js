@@ -94,6 +94,7 @@ export class Controller {
         }
         res.json(result)
     }
+
     crearNuevaProyecto = async (req, res) => {
         const token = req.headers.authorization.split(' ')[1]
         const tokenVerificado = verificarToken(token)

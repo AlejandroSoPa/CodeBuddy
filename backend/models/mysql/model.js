@@ -18,7 +18,7 @@ const config = {
 const connection = await mysql.createConnection(config)
 
 import { v4 as uuidv4 } from "uuid";
-import { comprobarUsuarioRegister, comprobarUsuarioLogin } from "../../../utils/modelUtils.js"
+import { comprobarUsuarioRegister, comprobarUsuarioLogin, comprobarTitulo } from "../../../utils/modelUtils.js"
 // Aqui es donde iran las consultas a la base de datos
 export class Model {
     static async helloWorld() {
@@ -191,7 +191,7 @@ export class Model {
         } else {
             try {
                 const tituloProyecto = `%${titulo}%`; // Agregamos los caracteres comodín para buscar coincidencias parciales
-                
+
                 const [contador] = await connection.query(
                     "SELECT COUNT(*) FROM PostProyecto WHERE titulo = ?;",
                     [tituloProyecto]
