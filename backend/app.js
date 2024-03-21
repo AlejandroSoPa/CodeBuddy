@@ -6,10 +6,51 @@ import compresor from 'compression';
 
 import { createRouter } from './routes/routes.js';
 
+//import {conexionBBDD} from "/utils/modelUtils.js"
+
+//const connection = conexionBBDD()
+
 config(); // inicializar dotenv
 
 const app = express();
 
+// Configuracion Autenticacion Google
+/*
+passport.use(new GoogleStrategy({
+  clientID: process.env.clientID,
+  clientSecret: process.env.secretGoogle,
+  callbackURL: "http://codebuddy.ieti.site/auth/google/callback",
+  scope: ['profile', 'email']
+},
+function(accessToken, refreshToken, profile, done) {
+  connection.query('SELECT * FROM AuthGoogle WHERE google_id = ?', [profile.id], function(err, results) {
+    if (err) {
+      return done(err);
+    }
+
+    if (results.length === 0) {
+      // Insertar nuevo usuario en la base de datos
+      connection.query('INSERT INTO AuthGoogle (google_id, email, name, profile_picture) VALUES (?, ?, ?, ?)', [profile.id, profile.email, profile.displayName, profile.photos[0].value], function(err) {
+        if (err) {
+          return done(err);
+        }
+
+        return done(null, { id: profile.id, email: profile.email, name: profile.displayName, profile_picture: profile.photos[0].value });
+      });
+    } else {
+      // Usuario existente
+      return done(null, results[0]);
+    }
+  });
+}));
+
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+app.get('/auth/google/callback', passport.authenticate('google', {
+  successRedirect: '/profile',
+  failureRedirect: '/login'
+}));
+*/
 // Define el middleware de express-rate-limit
 const limitador = limite({
   windowMs: 15 * 60 * 1000, // 15 minutos

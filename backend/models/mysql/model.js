@@ -18,7 +18,7 @@ const config = {
 const connection = await mysql.createConnection(config)
 
 import { v4 as uuidv4 } from "uuid";
-import { comprobarUsuarioRegister, comprobarUsuarioLogin } from "../../../utils/modelUtils.js"
+import { comprobarUsuarioRegister, comprobarUsuarioLogin, comprobarTitulo } from "../../../utils/modelUtils.js"
 // Aqui es donde iran las consultas a la base de datos
 export class Model {
     static async helloWorld() {
@@ -181,6 +181,61 @@ export class Model {
 
             console.error(e.message)
             return false
+        }
+    }
+
+    static async cogerPosts(req, titulo) {
+        const tituloComprobado = comprobarTitulo({ titulo });
+        if (!tituloComprobado) {
+            return false;
+        } else {
+            try {
+                const tituloProyecto = `%${titulo}%`; // Agregamos los caracteres comodín para buscar coincidencias parciales
+
+                const [contador] = await connection.query(
+                    "SELECT COUNT(*) FROM PostProyecto WHERE titulo = ?;",
+                    [tituloProyecto]
+                )
+
+                const offset = parseInt(req.query.offset) || 0;
+                const limit = 10;
+
+                if (contador !== 0) {
+                    const [proyectos] = await connection.query(
+                        `SELECT id, titulo, descripcion, limiteUsuarios, estado 
+                        FROM PostProyecto 
+                        WHERE titulo LIKE ? 
+                        ORDER BY fechaCreacion ASC 
+                        LIMIT ?, ?`,
+                        [tituloProyecto, offset, limit]
+                    )
+                    for (let i = 0; i < proyectos.length; i++) {
+                        const [etiquetas] = await connection.query(
+                            `SELECT id, nombre 
+                            FROM Etiqueta e
+                            INNER JOIN PostProyectoEtiqueta pe ON e.id = pe.idEtiqueta
+                            WHERE pe.idPostProyecto = ?`,
+                            [proyectos[i].id]
+                        )
+                        proyectos[i].etiquetas = etiquetas
+                    }
+                    for (let i = 0; i < proyectos.length; i++) {
+                        const [plataformas] = await connection.query(
+                            `SELECT id, nombre 
+                            FROM Plataforma p
+                            INNER JOIN PostProyectoPlataforma pp ON p.id = pp.idPlataforma
+                            WHERE pp.idPostProyecto = ?`,
+                            [proyectos[i].id]
+                        )
+                        proyectos[i].plataformas = plataformas
+                    }
+                    return proyectos
+                } else return false
+            } catch (e) {
+                console.error(e.message);
+                // Manejar el error adecuadamente, puedes lanzar una excepción, enviar un mensaje de error, etc.
+                return false;
+            }
         }
     }
 }

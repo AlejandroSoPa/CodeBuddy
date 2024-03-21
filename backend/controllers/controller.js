@@ -1,6 +1,7 @@
 import { Model } from "../models/mysql/model.js"
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
+
 import { verificarToken, comprobarPostProyecto } from "../../utils/modelUtils.js"
 
 export class Controller {
@@ -51,7 +52,7 @@ export class Controller {
             }
             const secretKey = process.env.secretKey
 
-            const token = jwt.sign(usuario, secretKey, { expiresIn: "4h" })
+            const token = jwt.sign(usuario, process.env.secretKey, { expiresIn: "4h" })
             result = { status: "OK", message: "Inicio de sesion correcto", data: { "token": token } }
 
         } else {
@@ -132,4 +133,24 @@ export class Controller {
         }
         res.json(result)
     }
+
+    cogerPosts = async (req, res) => {
+        try {
+            let result;
+            const response = await Model.cogerPosts(req, req.body.titulo);
+
+            if (response !== false) {
+                console.log(response)
+                result = { status: "OK", message: "Posts obtenidos", data: response };
+            } else {
+                result = { status: "KO", message: "Error al obtener los proyectos", data: {} };
+            }
+
+            res.json(result);
+        } catch (error) {
+            console.error("Error en el controlador cogerPosts:", error.message);
+            res.status(500).json({ status: "KO", message: "Error interno del servidor" });
+        }
+    }
+
 }

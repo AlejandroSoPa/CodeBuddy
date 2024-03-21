@@ -49,6 +49,25 @@ export function comprobarUsuarioGithub({ email }) {
     return true
 }
 
+export function comprobarTitulo({ titulo }) {
+    const usuarioNulo = comprobarObjetoNULL({ titulo })
+    if (usuarioNulo == false) {
+        return false
+    }
+    return true
+}
+
+export function comprobarPostProyecto({ titulo, descripcion, duracionEstimada, limiteUsuarios, etiquetas, plataformas }) {
+    return titulo && titulo.length > 0 && titulo.length <= 255
+        && descripcion && descripcion.length > 0 && descripcion.length <= 255
+        && duracionEstimada && duracionEstimada > 0 && duracionEstimada <= 100
+        && limiteUsuarios && limiteUsuarios > 0 && limiteUsuarios <= 100
+        && etiquetas && etiquetas.length > 0 && etiquetas.length <= 255
+        && plataformas && plataformas.length > 0 && plataformas.length <= 255
+}
+
+
+
 export function verificarToken(token) {
     let respuesta
     const secretKey = process.env.secretKey
@@ -61,20 +80,10 @@ export function verificarToken(token) {
             respuesta = false
         } else {
             // El token es válido
-            // console.log('Token verificado con éxito:', decodedToken);
             // Puedes acceder a la información del usuario a través de decodedToken
             respuesta = decodificado
         }
     })
 
     return respuesta
-}
-
-export function comprobarPostProyecto({ titulo, descripcion, duracionEstimada, limiteUsuarios, etiquetas, plataformas }) {
-    return titulo && titulo.length > 0 && titulo.length <= 255
-        && descripcion && descripcion.length > 0 && descripcion.length <= 255
-        && duracionEstimada && duracionEstimada > 0 && duracionEstimada <= 100
-        && limiteUsuarios && limiteUsuarios > 0 && limiteUsuarios <= 100
-        && etiquetas && etiquetas.length > 0 && etiquetas.length <= 255
-        && plataformas && plataformas.length > 0 && plataformas.length <= 255
 }
